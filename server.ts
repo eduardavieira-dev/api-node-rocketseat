@@ -1,7 +1,18 @@
-const fastify = require('fastify')
-const crypto = require('crypto')
+import fastify from 'fastify'
+import crypto from 'node:crypto'
+import { type } from 'node:os'
 
-const server = fastify()
+const server = fastify({
+    logger: {
+      transport: {
+        target: 'pino-pretty',
+        options: {
+          translateTime: 'HH:MM:ss Z',
+          ignore: 'pid,hostname',
+        },
+      }
+    }
+})
 
 const courses = [
   { id: '1', title: 'NodeJS' },
@@ -14,7 +25,12 @@ server.get('/courses', (request, reply)=> {
 })
 
 server.get('/courses/:id', (request, reply) => {
-    const courseId = request.params.id
+    type Params = {
+        id: string
+    }
+
+    const params = request.params as Params
+    const courseId = params.id
     const course = courses.find(course => course.id === courseId)
 
     if (course) {
@@ -25,8 +41,15 @@ server.get('/courses/:id', (request, reply) => {
 })
 
 server.post('/courses', (request, reply) => {
+
+    type Body = {
+        title: string
+    }
+
+    const body = request.body as Body
+
     const courseId = crypto.randomUUID()
-    const courseTitle = request.body.title
+    const courseTitle = body.title
 
     if(!courseTitle) {
         return reply.status(400).send({message: 'Title is required'})
@@ -38,8 +61,16 @@ server.post('/courses', (request, reply) => {
 })
 
 server.put('/courses/:id', (request, reply) => {
-    const courseId = request.params.id
-    const courseTitle = request.body.title
+
+    type Body = {
+        id: string,
+        title: string
+    }
+
+    const body = request.body as Body
+
+    const courseId = body.id
+    const courseTitle = body.title
 
     if(!courseTitle) {
         return reply.status(400).send({message: 'Title is required'})
@@ -57,7 +88,12 @@ server.put('/courses/:id', (request, reply) => {
 })
 
 server.delete('/courses/:id', (request, reply) => {
-    const courseId = request.params.id
+    type Params = {
+        id: string
+    }
+
+    const params = request.params as Params
+    const courseId = params.id
     const courseIndex = courses.findIndex(course => course.id === courseId)
 
     if (courseIndex >= 0) {
