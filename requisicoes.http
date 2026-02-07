@@ -1,0 +1,26 @@
+POST http://localhost:3333/courses
+Content-Type: application/json
+
+{
+    "title": "NodeJS"
+}
+
+###
+
+GET http://localhost:3333/courses
+
+
+###
+GET http://localhost:3333/courses/1
+
+###
+PUT http://localhost:3333/courses/2
+Content-Type: application/json  
+
+{
+    "title": "TypeScript"
+}
+
+###
+
+DELETE http://localhost:3333/courses/3
