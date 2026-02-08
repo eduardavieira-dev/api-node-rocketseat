@@ -11,16 +11,16 @@ GET http://localhost:3333/courses
 
 
 ###
-GET http://localhost:3333/courses/1
+GET http://localhost:3333/courses/8d333566-531e-4447-be0d-6b31693919e9
 
 ###
-PUT http://localhost:3333/courses/2
-Content-Type: application/json  
+PUT http://localhost:3333/courses/8d333566-531e-4447-be0d-6b31693919e9
+Content-Type: application/json
 
 {
-    "title": "TypeScript"
+  "title": "Curso de TypeScript"
 }
 
 ###
 
-DELETE http://localhost:3333/courses/3
+DELETE http://localhost:3333/courses/8d333566-531e-4447-be0d-6b31693919e9

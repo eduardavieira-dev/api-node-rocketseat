@@ -45,3 +45,5 @@ npm i drizzle-orm pg
 npx drizzle-kit generate
 npx drizzle-kit migrate
 npx drizzle-kit studio
+
+npm i zod

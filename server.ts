@@ -1,6 +1,9 @@
+import { eq } from 'drizzle-orm'
 import fastify from 'fastify'
 import crypto from 'node:crypto'
 import { type } from 'node:os'
+import { db } from './src/database/client.ts'
+import { courses } from './src/database/schema.ts'
 
 const server = fastify({
     logger: {
@@ -14,33 +17,35 @@ const server = fastify({
     }
 })
 
-const courses = [
-  { id: '1', title: 'NodeJS' },
-  { id: '2', title: 'ReactJS' },
-  { id: '3', title: 'React Native' }
-]
+server.get('/courses', async (request, reply)=> {
 
-server.get('/courses', (request, reply)=> {
-    return reply.send({courses})
+    const result = await db.select().from(courses)
+
+    return reply.send({courses: result})
 })
 
-server.get('/courses/:id', (request, reply) => {
+server.get('/courses/:id', async (request, reply) => {
     type Params = {
         id: string
     }
 
     const params = request.params as Params
     const courseId = params.id
-    const course = courses.find(course => course.id === courseId)
 
-    if (course) {
-        return reply.send({course})
+    const result = await db
+    .select()
+    .from(courses)
+    .where(eq(courses.id, courseId))
+    .limit(1)
+
+    if (result.length > 0) {
+        return {course: result[0]}
     }
     
     return reply.status(404).send({message: 'Course not found'})
 })
 
-server.post('/courses', (request, reply) => {
+server.post('/courses', async (request, reply) => {
 
     type Body = {
         title: string
@@ -48,38 +53,46 @@ server.post('/courses', (request, reply) => {
 
     const body = request.body as Body
 
-    const courseId = crypto.randomUUID()
     const courseTitle = body.title
 
     if(!courseTitle) {
         return reply.status(400).send({message: 'Title is required'})
     }
 
-    courses.push({ id: courseId, title: courseTitle })
+    const result = await db.insert(courses).values({
+        title: courseTitle
+    }).returning()
 
-    return reply.status(201).send({courseId})
+    return reply.status(201).send({courseId:result[0].id})
 })
 
-server.put('/courses/:id', (request, reply) => {
+server.put('/courses/:id', async (request, reply) => {
 
-    type Body = {
-        id: string,
-        title: string
-    }
+    type Params = {
+    id: string
+  }
 
-    const body = request.body as Body
+  type Body = {
+    title: string
+  }
 
-    const courseId = body.id
-    const courseTitle = body.title
+  const params = request.params as Params
+  const body = request.body as Body
+
+  const courseId = params.id
+  const courseTitle = body.title
 
     if(!courseTitle) {
         return reply.status(400).send({message: 'Title is required'})
     }
 
-    const courseIndex = courses.findIndex(course => course.id === courseId)
+    const result = await db
+    .update(courses)
+    .set({title: courseTitle})
+    .where(eq(courses.id, courseId))
+    .returning()
 
-    if (courseIndex >= 0) {
-        courses[courseIndex].title = courseTitle
+    if (result.length > 0) {
         return reply.send({message: 'Course updated successfully'})
     }
     
@@ -87,17 +100,20 @@ server.put('/courses/:id', (request, reply) => {
 
 })
 
-server.delete('/courses/:id', (request, reply) => {
+server.delete('/courses/:id', async (request, reply) => {
     type Params = {
         id: string
     }
 
     const params = request.params as Params
     const courseId = params.id
-    const courseIndex = courses.findIndex(course => course.id === courseId)
 
-    if (courseIndex >= 0) {
-        courses.splice(courseIndex, 1)
+    const result = await db
+    .delete(courses)
+    .where(eq(courses.id, courseId))
+    .returning()
+
+    if (result.length > 0) {
         return reply.status(204).send()
     }
     
