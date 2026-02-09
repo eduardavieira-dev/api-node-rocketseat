@@ -20,7 +20,8 @@ const server = fastify({
     }
 }).withTypeProvider<ZodTypeProvider>()
 
-server.register(fastifySwagger, {
+if(process.env.NODE_ENV === 'development') {
+  server.register(fastifySwagger, {
     openapi: {
         info: {
             title: 'Desafio Node.js - Rocketseat',
@@ -30,9 +31,13 @@ server.register(fastifySwagger, {
     },
     transform: jsonSchemaTransform,
 })
+}
 
 server.register(scalarAPIReference, {
   routePrefix: '/docs',
+  configuration: {
+    theme: 'bluePlanet',
+  }
 })
 
 // transforma os dados de entrada usando o zod, garantindo que a validação seja feita corretamente
