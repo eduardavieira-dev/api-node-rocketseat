@@ -47,3 +47,12 @@ npx drizzle-kit migrate
 npx drizzle-kit studio
 
 npm i zod
+npm i zod fastify-type-provider-zod
+
+// gerar documentaçao com open api
+npm i @fastify/swagger
+npm i @fastify/swagger-ui
+
+scalar fastify
+
+npm install @scalar/fastify-api-reference
