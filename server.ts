@@ -1,6 +1,5 @@
 import fastify from 'fastify'
 import { validatorCompiler, serializerCompiler, type ZodTypeProvider, jsonSchemaTransform } from 'fastify-type-provider-zod'
-import { fastifySwaggerUi} from '@fastify/swagger-ui'
 import { fastifySwagger} from '@fastify/swagger'
 import { getCoursesRoute } from './src/routes/get-courses.ts'
 import { updateCourseRoute } from './src/routes/update-course.ts'
@@ -8,6 +7,7 @@ import { getCourseByIdRoute } from './src/routes/get-course-by-id.ts'
 import { create } from 'node:domain'
 import { createCourseRoute } from './src/routes/create-course.ts'
 import { deleteCourseRoute } from './src/routes/delete-course.ts'
+import scalarAPIReference from '@scalar/fastify-api-reference'
 const server = fastify({
     logger: {
       transport: {
@@ -31,12 +31,8 @@ server.register(fastifySwagger, {
     transform: jsonSchemaTransform,
 })
 
-server.register(fastifySwaggerUi, {
-    routePrefix: '/docs',
-    uiConfig: {
-        docExpansion: 'full',
-        deepLinking: false,
-    },
+server.register(scalarAPIReference, {
+  routePrefix: '/docs',
 })
 
 // transforma os dados de entrada usando o zod, garantindo que a validação seja feita corretamente
@@ -55,28 +51,6 @@ const routes = [
 
 routes.forEach(route => server.register(route))
 
-
-
-// server.delete('/courses/:id', async (request, reply) => {
-//     type Params = {
-//         id: string
-//     }
-
-//     const params = request.params as Params
-//     const courseId = params.id
-
-//     const result = await db
-//     .delete(courses)
-//     .where(eq(courses.id, courseId))
-//     .returning()
-
-//     if (result.length > 0) {
-//         return reply.status(204).send()
-//     }
-    
-//     return reply.status(404).send({message: 'Course not found'})
-
-// })
 
 server.listen({port: 3333}).then(() => {
   console.log('Server is running on port 3333')

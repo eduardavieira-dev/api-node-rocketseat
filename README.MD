@@ -53,6 +53,8 @@ npm i zod fastify-type-provider-zod
 npm i @fastify/swagger
 npm i @fastify/swagger-ui
 
-scalar fastify
+scalar fastify para documentaçoes maais bonitas
+
+https://scalar.com/products/api-references/integrations/fastify
 
 npm install @scalar/fastify-api-reference
