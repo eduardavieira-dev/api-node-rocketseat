@@ -23,7 +23,7 @@ GET http://localhost:3333/courses?orderBy=title&page=1
 
 
 ###
-GET http://localhost:3333/courses/1b858396-48f2-4cc5-8c51-bd7e43a77caa
+GET http://localhost:3333/courses/117d7544-12a9-416f-bece-c04db835fd33
 
 ###
 PUT http://localhost:3333/courses/4d2d0db8-f597-46a9-9150-046d0e3e2284

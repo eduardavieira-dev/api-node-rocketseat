@@ -16,13 +16,11 @@ export const getCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
             }),
             response: {
                 200: z.object({
-                    courses: z.array(
-                        z.object({
+                  course:z.object({
                             id: z.uuid(),
                             title: z.string(),
                             description: z.string().nullable(),
                         })
-                    )
                 }),
                 404: z.null().describe('Course not found')
             },
@@ -38,7 +36,7 @@ export const getCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
         .limit(1)
     
         if(result.length > 0) {
-            return reply.send({courses: result})
+            return reply.send({course: result[0]})
         }
 
         return reply.status(404).send(null)

@@ -60,3 +60,26 @@ https://scalar.com/products/api-references/integrations/fastify
 npm install @scalar/fastify-api-reference
 
 npm i @faker-js/faker -D
+
+npm i vitest -D
+
+tipos de testes
+e2e => happy path, nn testa caminhos de erro
+unitario=> testa erros
+integration
+
+npm i -D supertest
+
+para integrar com o typescript
+
+npm i @types/supertest -D
+
+npm i dotenv-cli -D
+
+docker exec -it postgres_db psql -U postgres -c "CREATE DATABASE desafio_node_rocketseat_test;"
+
+rode as migrates do preteste para depois rodar o teste
+
+npm i @vitest/coverage-v8
+
+npm i -D @vitest/coverage-istanbul
