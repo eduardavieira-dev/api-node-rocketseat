@@ -15,6 +15,34 @@
       "when": 1770553997380,
       "tag": "0001_fancy_wolfpack",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1770680371355,
+      "tag": "0002_narrow_sharon_carter",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1770680580398,
+      "tag": "0003_wealthy_human_torch",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1770682047151,
+      "tag": "0004_same_blur",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1770682448693,
+      "tag": "0005_orange_shen",
+      "breakpoints": true
     }
   ]
 }

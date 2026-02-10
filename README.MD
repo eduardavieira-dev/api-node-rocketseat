@@ -58,3 +58,5 @@ scalar fastify para documentaçoes maais bonitas
 https://scalar.com/products/api-references/integrations/fastify
 
 npm install @scalar/fastify-api-reference
+
+npm i @faker-js/faker -D
