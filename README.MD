@@ -83,3 +83,7 @@ rode as migrates do preteste para depois rodar o teste
 npm i @vitest/coverage-v8
 
 npm i -D @vitest/coverage-istanbul
+
+argon2 para senhas
+
+npm i argon2

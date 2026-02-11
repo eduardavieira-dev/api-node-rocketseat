@@ -33,6 +33,7 @@
     "@fastify/swagger-ui": "^5.2.5",
     "@scalar/fastify-api-reference": "^1.44.15",
     "@vitest/coverage-v8": "^4.0.18",
+    "argon2": "^0.44.0",
     "drizzle-orm": "^0.45.1",
     "fastify": "^5.7.4",
     "fastify-type-provider-zod": "^6.1.0",

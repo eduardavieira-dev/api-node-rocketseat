@@ -1,12 +1,18 @@
 import { desc } from "drizzle-orm";
-import { pgTable, text, uuid, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
-import { create } from "node:domain";
-import { id } from "zod/locales";
+import { pgTable, text, uuid, timestamp, uniqueIndex, pgEnum } from "drizzle-orm/pg-core";
+
+
+export const userRole = pgEnum('user_role', [
+  'student',
+  'manager'
+])
 
 export const users = pgTable('users', {
     id: uuid('id').primaryKey().defaultRandom(),
     name: text('name').notNull(),
     email: text('email').notNull().unique(),
+    password: text('password').notNull(),
+    role: userRole('role').notNull().default('student')
 })
 
 export const courses = pgTable('courses', {
