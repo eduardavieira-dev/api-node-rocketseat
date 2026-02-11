@@ -8,6 +8,7 @@ import { create } from 'node:domain'
 import { createCourseRoute } from './routes/create-course.ts'
 import { deleteCourseRoute } from './routes/delete-course.ts'
 import scalarAPIReference from '@scalar/fastify-api-reference'
+import { loginRoute } from './routes/login.ts'
 const server = fastify({
     logger: {
       transport: {
@@ -52,6 +53,7 @@ const routes = [
   createCourseRoute,
   updateCourseRoute,
   deleteCourseRoute,
+  loginRoute
 ]
 
 routes.forEach(route => server.register(route))

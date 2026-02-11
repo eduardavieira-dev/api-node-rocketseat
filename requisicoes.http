@@ -36,3 +36,13 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3333/courses/8d333566-531e-4447-be0d-6b31693919e9
+
+###
+
+POST http://localhost:3333/sessions
+Content-Type: application/json
+
+{
+  "email": "Gabriel25@yahoo.com",
+  "password": "123456"
+}

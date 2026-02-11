@@ -87,3 +87,11 @@ npm i -D @vitest/coverage-istanbul
 argon2 para senhas
 
 npm i argon2
+
+JWT
+
+xxxxx.xxxx.xxxxx
+o segundo é o payload e a terceira parte do token é a assinatura(Explique essa parte toda do jwt)
+
+npm i jsonwebtoken
+npm i @types/jsonwebtoken -D
