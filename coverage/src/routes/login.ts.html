@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/11</span>
+                <span class='fraction'>11/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/11</span>
+                <span class='fraction'>11/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -116,7 +116,18 @@
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -125,10 +136,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -164,6 +179,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -177,6 +199,7 @@ import { courses, users } from "../database/schema.ts"
 import { z, string, email } from "zod"
 import { eq } from "drizzle-orm"
 import { verify } from 'argon2'
+import jwt from "jsonwebtoken"
 &nbsp;
 export const loginRoute: FastifyPluginAsyncZod = async (server) =&gt; {
    
@@ -190,11 +213,14 @@ export const loginRoute: FastifyPluginAsyncZod = async (server) =&gt; {
                email: z.email(),
                password: z.string()
            }), 
-        //    response: {
-        //        201: z.object({
-        //            courseId: z.uuid()
-        //        })
-        //    }
+           response: {
+               200: z.object({
+                   token: z.string()
+               }),
+               400: z.object({
+                   message: z.string()
+               }),
+           }
        },
    }, async (request, reply) =&gt; {
    
@@ -207,7 +233,7 @@ export const loginRoute: FastifyPluginAsyncZod = async (server) =&gt; {
    
 &nbsp;
        <span class="missing-if-branch" title="if path not taken" >I</span>if(result.length === 0){
-<span class="cstat-no" title="statement not covered" >            return reply.status(401).send({message: 'Invalid credentials'})</span>
+<span class="cstat-no" title="statement not covered" >            return reply.status(400).send({message: 'Invalid credentials'})</span>
        }
 &nbsp;
        const user = result[0]
@@ -216,10 +242,17 @@ export const loginRoute: FastifyPluginAsyncZod = async (server) =&gt; {
          const doesPasswordMatch = await verify(user.password, password)
 &nbsp;
          <span class="missing-if-branch" title="if path not taken" >I</span>if (!doesPasswordMatch) {
-<span class="cstat-no" title="statement not covered" >             return reply.status(401).send({ message: 'Invalid credentials' })</span>
+<span class="cstat-no" title="statement not covered" >             return reply.status(400).send({ message: 'Invalid credentials' })</span>
          }
+&nbsp;
+         <span class="missing-if-branch" title="if path not taken" >I</span>if (!process.env.JWT_SECRET) {
+<span class="cstat-no" title="statement not covered" >            throw new Error('JWT_SECRET must be set.')</span>
+        }
+        
+        const token = jwt.sign({ sub: user.id, role: user.role }, process.env.JWT_SECRET)
+  
    
-       return reply.status(200).send({message: 'ok'})
+       return reply.status(200).send({token})
    })
    
 }</pre></td></tr></table></pre>
@@ -229,7 +262,7 @@ export const loginRoute: FastifyPluginAsyncZod = async (server) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-11T20:38:19.172Z
+                at 2026-02-12T01:26:56.313Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

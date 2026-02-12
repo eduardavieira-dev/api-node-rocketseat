@@ -1,8 +1,10 @@
 POST http://localhost:3333/courses
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjQ2ZmNiMS0zY2M4LTQ0N2ItOGRiNS1iOGM2MGM2OTEzMWMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc3MDg1ODEzNX0.3FtVCWrN79VWYZLLO7xf35hjTxDzFW4E7L1kJathUPs
 
 {
-    "title": "Curso de JavaScript",}
+    "title": "Curso de JavaScript"
+}
 
 ###
 
@@ -26,8 +28,9 @@ GET http://localhost:3333/courses?orderBy=title&page=1
 GET http://localhost:3333/courses/117d7544-12a9-416f-bece-c04db835fd33
 
 ###
-PUT http://localhost:3333/courses/4d2d0db8-f597-46a9-9150-046d0e3e2284
+PUT http://localhost:3333/courses/8f37e0b7-4d82-41c3-9f98-0bfbb3354c54
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjQ2ZmNiMS0zY2M4LTQ0N2ItOGRiNS1iOGM2MGM2OTEzMWMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc3MDg1ODEzNX0.3FtVCWrN79VWYZLLO7xf35hjTxDzFW4E7L1kJathUPs
 
 {
   "title": "Curso de TS"
@@ -35,7 +38,8 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3333/courses/8d333566-531e-4447-be0d-6b31693919e9
+DELETE http://localhost:3333/courses/8f37e0b7-4d82-41c3-9f98-0bfbb3354c54
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjQ2ZmNiMS0zY2M4LTQ0N2ItOGRiNS1iOGM2MGM2OTEzMWMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc3MDg1ODEzNX0.3FtVCWrN79VWYZLLO7xf35hjTxDzFW4E7L1kJathUPs
 
 ###
 
@@ -46,3 +50,17 @@ Content-Type: application/json
   "email": "Gabriel25@yahoo.com",
   "password": "123456"
 }
+###
+
+POST http://localhost:3333/sessions
+Content-Type: application/json
+
+{
+  "email": "manager@email.com",
+  "password": "123456"
+}
+
+
+###
+GET http://localhost:3333/courses/8f37e0b7-4d82-41c3-9f98-0bfbb3354c54
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjQ2ZmNiMS0zY2M4LTQ0N2ItOGRiNS1iOGM2MGM2OTEzMWMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc3MDg1ODEzNX0.3FtVCWrN79VWYZLLO7xf35hjTxDzFW4E7L1kJathUPs

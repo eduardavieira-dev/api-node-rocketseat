@@ -3,10 +3,16 @@ import { db } from "../database/client.ts"
 import { courses } from "../database/schema.ts"
 import { eq } from 'drizzle-orm'
 import { uuid, z} from 'zod'
+import { checkRequestJWT } from '../hooks/check-request-jwt.ts'
+import { checkUserRole } from '../hooks/check-user-role.ts'
 
 export const updateCourseRoute: FastifyPluginAsyncZod = async (server) => {
     // Rota para atualizar um curso
     server.put('/courses/:id', {
+        preHandler: [
+            checkRequestJWT,
+            checkUserRole('manager'),
+        ],
         schema: {
             tags: ['Courses'],
             summary: 'Update a course',

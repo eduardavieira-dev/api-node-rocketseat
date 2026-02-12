@@ -1,7 +1,6 @@
 import { test, expect } from 'vitest'
 import request from 'supertest'
 import { server } from '../app.ts'
-import { faker } from '@faker-js/faker'
 import { makeUser } from '../tests/factories/make-user.ts'
 
 test('login', async () => {
@@ -19,6 +18,6 @@ test('login', async () => {
 
   expect(response.status).toEqual(200)
   expect(response.body).toEqual({
-    message: 'ok'
+    token: expect.any(String),
   })
 })

@@ -26,6 +26,12 @@ async function seed(){
             password: passwordHash,
             role: 'student',
         },
+        { 
+            name: 'Admin Manager', 
+            email: 'manager@email.com',
+            password: passwordHash,
+            role: 'manager',
+        },
     ]).returning()
 
     const coursesInserted = await db.insert(courses).values([
