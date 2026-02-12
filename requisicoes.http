@@ -1,48 +1,47 @@
+### API - Test Requests
+# This collection contains simple HTTP requests to exercise the local API
+# - Use the `/sessions` endpoints to get a JWT for the manager or student user
+# - Add the returned token to requests that require authorization as `Authorization: Bearer <token>`
+# - The manager user is seeded as: `manager@email.com` / `123456`
+
+### Create a course (requires manager)
 POST http://localhost:3333/courses
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjQ2ZmNiMS0zY2M4LTQ0N2ItOGRiNS1iOGM2MGM2OTEzMWMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc3MDg1ODEzNX0.3FtVCWrN79VWYZLLO7xf35hjTxDzFW4E7L1kJathUPs
-
+Authorization: token
 {
-    "title": "Curso de JavaScript"
+  "title": "Curso de JavaScript"
 }
 
-###
-
+### List courses (public)
 GET http://localhost:3333/courses
 
-###
-
-
+### Search courses (public)
 GET http://localhost:3333/courses?search=javascript
-###
 
-
+### List courses ordered by title (public)
 GET http://localhost:3333/courses?orderBy=title
-###
 
-
+### Paginated list (public)
 GET http://localhost:3333/courses?orderBy=title&page=1
 
-
-###
+### Get course by id (logged in)
 GET http://localhost:3333/courses/117d7544-12a9-416f-bece-c04db835fd33
+Authorization: token
 
-###
+### Update a course (requires manager)
 PUT http://localhost:3333/courses/8f37e0b7-4d82-41c3-9f98-0bfbb3354c54
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjQ2ZmNiMS0zY2M4LTQ0N2ItOGRiNS1iOGM2MGM2OTEzMWMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc3MDg1ODEzNX0.3FtVCWrN79VWYZLLO7xf35hjTxDzFW4E7L1kJathUPs
+Authorization: token
 
 {
   "title": "Curso de TS"
 }
 
-###
-
+### Delete a course (requires manager)
 DELETE http://localhost:3333/courses/8f37e0b7-4d82-41c3-9f98-0bfbb3354c54
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjQ2ZmNiMS0zY2M4LTQ0N2ItOGRiNS1iOGM2MGM2OTEzMWMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc3MDg1ODEzNX0.3FtVCWrN79VWYZLLO7xf35hjTxDzFW4E7L1kJathUPs
+Authorization: token
 
-###
-
+### Login student
 POST http://localhost:3333/sessions
 Content-Type: application/json
 
@@ -50,8 +49,8 @@ Content-Type: application/json
   "email": "Gabriel25@yahoo.com",
   "password": "123456"
 }
-###
 
+### Login manager
 POST http://localhost:3333/sessions
 Content-Type: application/json
 
@@ -60,7 +59,76 @@ Content-Type: application/json
   "password": "123456"
 }
 
-
-###
+### Example: get a course with token
 GET http://localhost:3333/courses/8f37e0b7-4d82-41c3-9f98-0bfbb3354c54
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjQ2ZmNiMS0zY2M4LTQ0N2ItOGRiNS1iOGM2MGM2OTEzMWMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc3MDg1ODEzNX0.3FtVCWrN79VWYZLLO7xf35hjTxDzFW4E7L1kJathUPs
+Authorization: token
+
+
+#
+# Versão em Português
+#
+
+### API - Requisições de Teste
+# Esta coleção contém requisições HTTP simples para testar a API local
+# - Use os endpoints `/sessions` para obter um JWT para o usuário gerente ou estudante
+# - Adicione o token retornado às requisições que exigem autorização como `Authorization: Bearer <token>`
+# - O usuário gerente está pré-criado como: `manager@email.com` / `123456`
+
+### Criar um curso (exige gerente)
+POST http://localhost:3333/courses
+Content-Type: application/json
+Authorization: token
+{
+  "title": "Curso de JavaScript"
+}
+
+### Listar cursos (público)
+GET http://localhost:3333/courses
+
+### Buscar cursos (público)
+GET http://localhost:3333/courses?search=javascript
+
+### Listar cursos ordenados por título (público)
+GET http://localhost:3333/courses?orderBy=title
+
+### Lista paginada (público)
+GET http://localhost:3333/courses?orderBy=title&page=1
+
+### Obter curso por id (autenticado)
+GET http://localhost:3333/courses/117d7544-12a9-416f-bece-c04db835fd33
+Authorization: token
+
+### Atualizar um curso (exige gerente)
+PUT http://localhost:3333/courses/8f37e0b7-4d82-41c3-9f98-0bfbb3354c54
+Content-Type: application/json
+Authorization: token
+
+{
+  "title": "Curso de TS"
+}
+
+### Excluir um curso (exige gerente)
+DELETE http://localhost:3333/courses/8f37e0b7-4d82-41c3-9f98-0bfbb3354c54
+Authorization: token
+
+### Login do estudante
+POST http://localhost:3333/sessions
+Content-Type: application/json
+
+{
+  "email": "Gabriel25@yahoo.com",
+  "password": "123456"
+}
+
+### Login do gerente
+POST http://localhost:3333/sessions
+Content-Type: application/json
+
+{
+  "email": "manager@email.com",
+  "password": "123456"
+}
+
+### Exemplo: obter um curso com token
+GET http://localhost:3333/courses/8f37e0b7-4d82-41c3-9f98-0bfbb3354c54
+Authorization: token
